@@ -1,0 +1,31 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.linuxgods.kreiger.intellij.idea.www-form-urlencoded</id>
+
+    <name>URL-Encoding Support</name>
+
+    <vendor email="christoffer.hammarstrom@linuxgods.com">Christoffer Hammarström</vendor>
+
+    <description><![CDATA[
+        <p><code>application/x-www-form-urlencoded</code> support</p>
+        ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType language="application/x-www-form-urlencoded"
+                  name="application/x-www-form-urlencoded"
+                  extensions="urlencoded;querystring;form-urlencoded;params"
+                  implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedFileType"/>
+        <lang.parserDefinition language="application/x-www-form-urlencoded"
+                               implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="application/x-www-form-urlencoded"
+                                       implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedSyntaxHighlighterFactory"/>
+        <lang.foldingBuilder language="application/x-www-form-urlencoded"
+                             implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedFoldingBuilder"/>
+    </extensions>
+</idea-plugin>

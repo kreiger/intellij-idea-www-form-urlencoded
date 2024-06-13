@@ -1,0 +1,46 @@
+{
+  parserClass="com.linuxgods.kreiger.intellij.idea.url.encoded.parser.UrlEncodedParser"
+  parserImports="static com.intellij.psi.TokenType.WHITE_SPACE"
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="UrlEncoded"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.linuxgods.kreiger.intellij.idea.url.encoded.psi"
+  psiImplPackage="com.linuxgods.kreiger.intellij.idea.url.encoded.psi.impl"
+
+  elementTypeHolderClass="com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedTypes"
+  elementTypeClass="com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedElementType"
+  tokenTypeClass="com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedTokenType"
+/*
+  tokens = [
+    AMPERSAND       = '&'
+    EQUALS          = '='
+    WHITE_SPACE     = 'regexp:\R'
+    UNESCAPED_NAME  = 'regexp:[^&=%+\s]+'
+    UNESCAPED_VALUE = 'regexp:[^&=%+\s]+'
+    VALID_ESCAPE    = 'regexp:\+|%[0-9a-fA-F]{2}'
+    INVALID_ESCAPE  = 'regexp:%[^0-9a-fA-F]?'
+  ]
+ */
+
+}
+
+urlEncodedFormData ::= AMPERSAND* fields AMPERSAND*
+
+private fields ::= field_ AMPERSAND+ fields | field
+
+private field_ ::= field { recoverWhile="field_recover" pin=1 }
+
+field ::= field_name optional_value?
+
+private optional_value ::= EQUALS field_value?
+
+field_name ::= (UNESCAPED_NAME | escapes)+
+
+field_value ::= (UNESCAPED_VALUE | escapes)+
+
+escapes ::= VALID_ESCAPE+
+
+private invalid_escape_ ::= INVALID_ESCAPE
+
+private field_recover ::= !( AMPERSAND | WHITE_SPACE )
