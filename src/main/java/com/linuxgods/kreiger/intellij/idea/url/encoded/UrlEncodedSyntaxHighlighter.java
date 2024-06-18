@@ -17,7 +17,7 @@ public class UrlEncodedSyntaxHighlighter implements SyntaxHighlighter {
     public static final TextAttributesKey SEPARATOR =
             createTextAttributesKey("URL_ENCODED_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     public static final TextAttributesKey NAME =
-            createTextAttributesKey("URL_ENCODED_KEY", DefaultLanguageHighlighterColors.KEYWORD);
+            createTextAttributesKey("URL_ENCODED_NAME", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
     public static final TextAttributesKey VALUE =
             createTextAttributesKey("URL_ENCODED_VALUE", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey VALID_ESCAPE =
