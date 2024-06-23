@@ -37,7 +37,7 @@ public class UrlEncodedParserDefinition implements ParserDefinition {
     }
 
     @Override public @NotNull TokenSet getWhitespaceTokens() {
-        return TokenSet.WHITE_SPACE;
+        return TokenSet.EMPTY;
     }
 
     @NotNull @Override public SpaceRequirements spaceExistenceTypeBetweenTokens(ASTNode left, ASTNode right) {

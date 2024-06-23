@@ -11,6 +11,7 @@
   elementTypeHolderClass="com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedTypes"
   elementTypeClass="com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedElementType"
   tokenTypeClass="com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedTokenType"
+
 /*
   tokens = [
     AMPERSAND       = '&'
@@ -25,19 +26,23 @@
 
 }
 
-urlEncodedFormData ::= AMPERSAND* fields AMPERSAND*
+urlEncodedFormData ::= QUESTION_MARK? query_string
 
-private fields ::= field_ AMPERSAND+ fields | field
+private query_string ::= AMPERSAND* fields AMPERSAND*
 
-private field_ ::= field { recoverWhile="field_recover" pin=1 }
+private fields ::= field (AMPERSAND | WHITE_SPACE)+ fields | field
 
-field ::= field_name optional_value?
+field ::= field_name optional_value? {
+    implements="com.linuxgods.kreiger.intellij.idea.url.encoded.psi.impl.UrlEncodedNamedElement"
+    mixin="com.linuxgods.kreiger.intellij.idea.url.encoded.psi.impl.UrlEncodedFieldMixin"
+    recoverWhile="field_recover" pin=1
+}
 
-private optional_value ::= EQUALS field_value?
+private optional_value ::= EQUALS field_value
 
 field_name ::= (UNESCAPED_NAME | escapes)+
 
-field_value ::= (UNESCAPED_VALUE | escapes)+
+field_value ::= (UNESCAPED_VALUE | escapes)*
 
 escapes ::= VALID_ESCAPE+
 

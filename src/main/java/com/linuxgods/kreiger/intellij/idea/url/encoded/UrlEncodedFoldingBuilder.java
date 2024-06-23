@@ -7,13 +7,15 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.FoldingGroup;
 import com.intellij.psi.PsiElement;
 import com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedEscapes;
-import com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedFieldName;
 import com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.net.URLDecoder;
 import java.util.ArrayDeque;
 import java.util.Deque;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class UrlEncodedFoldingBuilder extends FoldingBuilderEx {
     @Override
@@ -34,19 +36,7 @@ public class UrlEncodedFoldingBuilder extends FoldingBuilderEx {
     }
 
     @Override public @Nullable String getPlaceholderText(@NotNull ASTNode node) {
-        String text = node.getText();
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < text.length();) {
-            char c = text.charAt(i);
-            if (c == '%') {
-                builder.append((char)Integer.parseInt(text.substring(i+1, i+3), 16));
-                i += 3;
-            } else {
-                builder.append(' ');
-                i++;
-            }
-        }
-        return builder.toString();
+        return URLDecoder.decode(node.getText(), UTF_8);
     }
 
     @Override public boolean isCollapsedByDefault(@NotNull ASTNode node) {

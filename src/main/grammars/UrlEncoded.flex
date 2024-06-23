@@ -14,43 +14,42 @@ import com.intellij.psi.TokenType;
 %eof{  return;
 %eof}
 
+NEWLINE=\R
+QUESTION_MARK="?"
 AMPERSAND="&"
 EQUALS="="
 PERCENT="%"
 PLUS="+"
 HEX=[0-9a-fA-F]
+UNRESERVED=[^?&=%+\s]
 
 %state NAME
 %state VALUE
-%state AMPERSAND
 
 %%
 
 <YYINITIAL> {
-    \R+                    { return TokenType.WHITE_SPACE; }
-    {AMPERSAND}            { yybegin(NAME); return UrlEncodedTypes.AMPERSAND; }
+    {QUESTION_MARK}        { return UrlEncodedTypes.QUESTION_MARK; }
     [^]                    { yypushback(1); yybegin(NAME); }
 }
 
 <NAME> {
     {EQUALS}               { yybegin(VALUE); return UrlEncodedTypes.EQUALS; }
+    {NEWLINE}+             { return TokenType.WHITE_SPACE; }
+    {AMPERSAND}            { return UrlEncodedTypes.AMPERSAND; }
     {PLUS}                 { return UrlEncodedTypes.VALID_ESCAPE; }
     {PERCENT} {HEX} {HEX}  { return UrlEncodedTypes.VALID_ESCAPE; }
     {PERCENT} {HEX}?       { return UrlEncodedTypes.INVALID_ESCAPE; }
-    [^&=%+\s]+             { return UrlEncodedTypes.UNESCAPED_NAME; }
+    {UNRESERVED}+          { return UrlEncodedTypes.UNESCAPED_NAME; }
 }
 
 <VALUE> {
-    \R+                    { yybegin(AMPERSAND); return TokenType.WHITE_SPACE; }
-    {AMPERSAND}            { yybegin(YYINITIAL); return UrlEncodedTypes.AMPERSAND; }
+    {NEWLINE}+             { yybegin(NAME); return TokenType.WHITE_SPACE; }
+    {AMPERSAND}            { yybegin(NAME); return UrlEncodedTypes.AMPERSAND; }
     {PLUS}                 { return UrlEncodedTypes.VALID_ESCAPE; }
     {PERCENT} {HEX} {HEX}  { return UrlEncodedTypes.VALID_ESCAPE; }
     {PERCENT} {HEX}?       { return UrlEncodedTypes.INVALID_ESCAPE; }
-    [^&=%+\s]+             { return UrlEncodedTypes.UNESCAPED_VALUE; }
-}
-
-<AMPERSAND> {
-    {AMPERSAND}            { yybegin(YYINITIAL); return UrlEncodedTypes.AMPERSAND; }
+    {UNRESERVED}+          { return UrlEncodedTypes.UNESCAPED_VALUE; }
 }
 
 [^]                        { return TokenType.BAD_CHARACTER; }

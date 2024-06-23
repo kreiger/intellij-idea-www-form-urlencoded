@@ -27,5 +27,7 @@
                                        implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedSyntaxHighlighterFactory"/>
         <lang.foldingBuilder language="application/x-www-form-urlencoded"
                              implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedFoldingBuilder"/>
+        <lang.psiStructureViewFactory language="application/x-www-form-urlencoded"
+                              implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedStructureViewFactory"/>
     </extensions>
 </idea-plugin>
