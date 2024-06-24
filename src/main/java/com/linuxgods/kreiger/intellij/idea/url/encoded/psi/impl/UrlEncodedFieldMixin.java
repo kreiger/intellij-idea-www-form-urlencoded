@@ -36,8 +36,8 @@ public abstract class UrlEncodedFieldMixin extends ASTWrapperPsiElement implemen
         if (node != null) {
             UrlEncodedField field =
                     UrlEncodedElementFactory.createField(getProject(), newName);
-            ASTNode newKeyNode = field.getFirstChild().getNode();
-            getNode().replaceChild(node, newKeyNode);
+            ASTNode newNode = field.getFirstChild().getNode();
+            getNode().replaceChild(node, newNode);
         }
         return this;
     }

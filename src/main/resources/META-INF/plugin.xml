@@ -25,9 +25,17 @@
                                implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedParserDefinition"/>
         <lang.syntaxHighlighterFactory language="application/x-www-form-urlencoded"
                                        implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedSyntaxHighlighterFactory"/>
+        <annotator language="application/x-www-form-urlencoded" implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedAnnotator"/>
         <lang.foldingBuilder language="application/x-www-form-urlencoded"
                              implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedFoldingBuilder"/>
         <lang.psiStructureViewFactory language="application/x-www-form-urlencoded"
                               implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedStructureViewFactory"/>
+        <navbar implementation="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedNavBarExtension"/>
+        <spellchecker.support language="application/x-www-form-urlencoded" implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedSpellcheckingStrategy"/>
+        <localInspection language="application/x-www-form-urlencoded"
+                         displayName="URL character needs encoding"
+                         groupName="URL"
+                         enabledByDefault="true"
+                         implementationClass="com.linuxgods.kreiger.intellij.idea.url.encoded.UrlEncodedInspection"/>
     </extensions>
 </idea-plugin>

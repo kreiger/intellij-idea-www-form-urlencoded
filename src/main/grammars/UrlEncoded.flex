@@ -21,7 +21,7 @@ EQUALS="="
 PERCENT="%"
 PLUS="+"
 HEX=[0-9a-fA-F]
-UNRESERVED=[^?&=%+\s]
+UNRESERVED=[\x21-\x7e&&[^&=%+#]]
 
 %state NAME
 %state VALUE
@@ -35,21 +35,15 @@ UNRESERVED=[^?&=%+\s]
 
 <NAME> {
     {EQUALS}               { yybegin(VALUE); return UrlEncodedTypes.EQUALS; }
-    {NEWLINE}+             { return TokenType.WHITE_SPACE; }
-    {AMPERSAND}            { return UrlEncodedTypes.AMPERSAND; }
-    {PLUS}                 { return UrlEncodedTypes.VALID_ESCAPE; }
-    {PERCENT} {HEX} {HEX}  { return UrlEncodedTypes.VALID_ESCAPE; }
-    {PERCENT} {HEX}?       { return UrlEncodedTypes.INVALID_ESCAPE; }
-    {UNRESERVED}+          { return UrlEncodedTypes.UNESCAPED_NAME; }
 }
 
-<VALUE> {
+<NAME,VALUE> {
     {NEWLINE}+             { yybegin(NAME); return TokenType.WHITE_SPACE; }
     {AMPERSAND}            { yybegin(NAME); return UrlEncodedTypes.AMPERSAND; }
     {PLUS}                 { return UrlEncodedTypes.VALID_ESCAPE; }
     {PERCENT} {HEX} {HEX}  { return UrlEncodedTypes.VALID_ESCAPE; }
     {PERCENT} {HEX}?       { return UrlEncodedTypes.INVALID_ESCAPE; }
-    {UNRESERVED}+          { return UrlEncodedTypes.UNESCAPED_VALUE; }
+    {UNRESERVED}+          { return UrlEncodedTypes.UNRESERVED_TOKEN; }
 }
 
 [^]                        { return TokenType.BAD_CHARACTER; }

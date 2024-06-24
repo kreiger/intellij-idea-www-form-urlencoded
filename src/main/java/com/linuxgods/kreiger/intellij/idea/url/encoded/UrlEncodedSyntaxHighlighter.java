@@ -18,8 +18,8 @@ public class UrlEncodedSyntaxHighlighter implements SyntaxHighlighter {
             createTextAttributesKey("URL_ENCODED_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     public static final TextAttributesKey NAME =
             createTextAttributesKey("URL_ENCODED_NAME", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
-    public static final TextAttributesKey VALUE =
-            createTextAttributesKey("URL_ENCODED_VALUE", DefaultLanguageHighlighterColors.STRING);
+    public static final TextAttributesKey STRING =
+            createTextAttributesKey("URL_ENCODED_STRING", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey VALID_ESCAPE =
             createTextAttributesKey("URL_ENCODED_VALID_ESCAPE", DefaultLanguageHighlighterColors.VALID_STRING_ESCAPE);
     public static final TextAttributesKey INVALID_ESCAPE =
@@ -30,8 +30,7 @@ public class UrlEncodedSyntaxHighlighter implements SyntaxHighlighter {
 
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
     private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
-    private static final TextAttributesKey[] NAME_KEYS = new TextAttributesKey[]{NAME};
-    private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
+    private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
     private static final TextAttributesKey[] VALID_ESCAPE_KEYS = new TextAttributesKey[]{VALID_ESCAPE};
     private static final TextAttributesKey[] INVALID_ESCAPE_KEYS = new TextAttributesKey[]{INVALID_ESCAPE};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
@@ -46,17 +45,8 @@ public class UrlEncodedSyntaxHighlighter implements SyntaxHighlighter {
         if (tokenType.equals(UrlEncodedTypes.AMPERSAND) || tokenType.equals(UrlEncodedTypes.EQUALS)) {
             return SEPARATOR_KEYS;
         }
-        if (tokenType.equals(UrlEncodedTypes.FIELD_NAME)) {
-            return NAME_KEYS;
-        }
-        if (tokenType.equals(UrlEncodedTypes.FIELD_VALUE)) {
-            return VALUE_KEYS;
-        }
-        if (tokenType.equals(UrlEncodedTypes.UNESCAPED_NAME)) {
-            return NAME_KEYS;
-        }
-        if (tokenType.equals(UrlEncodedTypes.UNESCAPED_VALUE)) {
-            return VALUE_KEYS;
+        if (tokenType.equals(UrlEncodedTypes.UNRESERVED_TOKEN)) {
+            return STRING_KEYS;
         }
         if (tokenType.equals(UrlEncodedTypes.VALID_ESCAPE)) {
             return VALID_ESCAPE_KEYS;

@@ -4,13 +4,10 @@ import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
-import com.intellij.platform.backend.navigation.NavigationRequest;
 import com.intellij.psi.NavigatablePsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.linuxgods.kreiger.intellij.idea.url.encoded.psi.UrlEncodedField;
-import com.linuxgods.kreiger.intellij.idea.url.encoded.psi.impl.UrlEncodedFieldImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
